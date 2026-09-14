@@ -1,0 +1,649 @@
+Analysis & Synthesis report for pc_hw_test
+Sun Aug 30 22:01:51 2026
+Quartus Prime Version 25.1std.0 Build 1129 10/21/2025 SC Lite Edition
+
+
+---------------------
+; Table of Contents ;
+---------------------
+  1. Legal Notice
+  2. Analysis & Synthesis Summary
+  3. Analysis & Synthesis Settings
+  4. Parallel Compilation
+  5. Analysis & Synthesis Source Files Read
+  6. Analysis & Synthesis Resource Usage Summary
+  7. Analysis & Synthesis Resource Utilization by Entity
+  8. Registers Removed During Synthesis
+  9. General Register Statistics
+ 10. Inverted Register Statistics
+ 11. Multiplexer Restructuring Statistics (Restructuring Performed)
+ 12. Parameter Settings for Inferred Entity Instance: lpm_divide:Div0
+ 13. Parameter Settings for Inferred Entity Instance: lpm_divide:Mod0
+ 14. Port Connectivity Checks: "bus_decoder:bus"
+ 15. Port Connectivity Checks: "cpu_core:cpu|pc:pc_inst"
+ 16. Port Connectivity Checks: "cpu_core:cpu|decoder:dec_inst"
+ 17. Port Connectivity Checks: "cpu_core:cpu"
+ 18. Post-Synthesis Netlist Statistics for Top Partition
+ 19. Elapsed Time Per Partition
+ 20. Analysis & Synthesis Messages
+
+
+
+----------------
+; Legal Notice ;
+----------------
+Copyright (C) 2025  Altera Corporation. All rights reserved.
+Your use of Altera Corporation's design tools, logic functions 
+and other software and tools, and any partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Altera Program License 
+Subscription Agreement, the Altera Quartus Prime License Agreement,
+the Altera IP License Agreement, or other applicable license
+agreement, including, without limitation, that your use is for
+the sole purpose of programming logic devices manufactured by
+Altera and sold by Altera or its authorized distributors.  Please
+refer to the Altera Software License Subscription Agreements 
+on the Quartus Prime software download page.
+
+
+
++--------------------------------------------------------------------------------------+
+; Analysis & Synthesis Summary                                                         ;
++------------------------------------+-------------------------------------------------+
+; Analysis & Synthesis Status        ; Successful - Sun Aug 30 22:01:51 2026           ;
+; Quartus Prime Version              ; 25.1std.0 Build 1129 10/21/2025 SC Lite Edition ;
+; Revision Name                      ; pc_hw_test                                      ;
+; Top-level Entity Name              ; soc_top                                         ;
+; Family                             ; MAX 10                                          ;
+; Total logic elements               ; 12,118                                          ;
+;     Total combinational functions  ; 6,912                                           ;
+;     Dedicated logic registers      ; 5,417                                           ;
+; Total registers                    ; 5417                                            ;
+; Total pins                         ; 27                                              ;
+; Total virtual pins                 ; 0                                               ;
+; Total memory bits                  ; 0                                               ;
+; Embedded Multiplier 9-bit elements ; 0                                               ;
+; Total PLLs                         ; 0                                               ;
+; UFM blocks                         ; 0                                               ;
+; ADC blocks                         ; 0                                               ;
++------------------------------------+-------------------------------------------------+
+
+
++------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Settings                                                                              ;
++------------------------------------------------------------------+--------------------+--------------------+
+; Option                                                           ; Setting            ; Default Value      ;
++------------------------------------------------------------------+--------------------+--------------------+
+; Device                                                           ; 10M50DAF484C7G     ;                    ;
+; Top-level entity name                                            ; soc_top            ; pc_hw_test         ;
+; Family name                                                      ; MAX 10             ; Cyclone V          ;
+; Use smart compilation                                            ; Off                ; Off                ;
+; Enable parallel Assembler and Timing Analyzer during compilation ; On                 ; On                 ;
+; Enable compact report table                                      ; Off                ; Off                ;
+; Restructure Multiplexers                                         ; Auto               ; Auto               ;
+; Create Debugging Nodes for IP Cores                              ; Off                ; Off                ;
+; Preserve fewer node names                                        ; On                 ; On                 ;
+; Intel FPGA IP Evaluation Mode                                    ; Enable             ; Enable             ;
+; Verilog Version                                                  ; Verilog_2001       ; Verilog_2001       ;
+; VHDL Version                                                     ; VHDL_1993          ; VHDL_1993          ;
+; State Machine Processing                                         ; Auto               ; Auto               ;
+; Safe State Machine                                               ; Off                ; Off                ;
+; Extract Verilog State Machines                                   ; On                 ; On                 ;
+; Extract VHDL State Machines                                      ; On                 ; On                 ;
+; Ignore Verilog initial constructs                                ; Off                ; Off                ;
+; Iteration limit for constant Verilog loops                       ; 5000               ; 5000               ;
+; Iteration limit for non-constant Verilog loops                   ; 250                ; 250                ;
+; Add Pass-Through Logic to Inferred RAMs                          ; On                 ; On                 ;
+; Infer RAMs from Raw Logic                                        ; On                 ; On                 ;
+; Parallel Synthesis                                               ; On                 ; On                 ;
+; DSP Block Balancing                                              ; Auto               ; Auto               ;
+; NOT Gate Push-Back                                               ; On                 ; On                 ;
+; Power-Up Don't Care                                              ; On                 ; On                 ;
+; Remove Redundant Logic Cells                                     ; Off                ; Off                ;
+; Remove Duplicate Registers                                       ; On                 ; On                 ;
+; Ignore CARRY Buffers                                             ; Off                ; Off                ;
+; Ignore CASCADE Buffers                                           ; Off                ; Off                ;
+; Ignore GLOBAL Buffers                                            ; Off                ; Off                ;
+; Ignore ROW GLOBAL Buffers                                        ; Off                ; Off                ;
+; Ignore LCELL Buffers                                             ; Off                ; Off                ;
+; Ignore SOFT Buffers                                              ; On                 ; On                 ;
+; Limit AHDL Integers to 32 Bits                                   ; Off                ; Off                ;
+; Optimization Technique                                           ; Balanced           ; Balanced           ;
+; Carry Chain Length                                               ; 70                 ; 70                 ;
+; Auto Carry Chains                                                ; On                 ; On                 ;
+; Auto Open-Drain Pins                                             ; On                 ; On                 ;
+; Perform WYSIWYG Primitive Resynthesis                            ; Off                ; Off                ;
+; Auto ROM Replacement                                             ; On                 ; On                 ;
+; Auto RAM Replacement                                             ; On                 ; On                 ;
+; Auto DSP Block Replacement                                       ; On                 ; On                 ;
+; Auto Shift Register Replacement                                  ; Auto               ; Auto               ;
+; Allow Shift Register Merging across Hierarchies                  ; Auto               ; Auto               ;
+; Auto Clock Enable Replacement                                    ; On                 ; On                 ;
+; Strict RAM Replacement                                           ; Off                ; Off                ;
+; Allow Synchronous Control Signals                                ; On                 ; On                 ;
+; Force Use of Synchronous Clear Signals                           ; Off                ; Off                ;
+; Auto RAM Block Balancing                                         ; On                 ; On                 ;
+; Auto RAM to Logic Cell Conversion                                ; Off                ; Off                ;
+; Auto Resource Sharing                                            ; Off                ; Off                ;
+; Allow Any RAM Size For Recognition                               ; Off                ; Off                ;
+; Allow Any ROM Size For Recognition                               ; Off                ; Off                ;
+; Allow Any Shift Register Size For Recognition                    ; Off                ; Off                ;
+; Use LogicLock Constraints during Resource Balancing              ; On                 ; On                 ;
+; Ignore translate_off and synthesis_off directives                ; Off                ; Off                ;
+; Timing-Driven Synthesis                                          ; On                 ; On                 ;
+; Report Parameter Settings                                        ; On                 ; On                 ;
+; Report Source Assignments                                        ; On                 ; On                 ;
+; Report Connectivity Checks                                       ; On                 ; On                 ;
+; Ignore Maximum Fan-Out Assignments                               ; Off                ; Off                ;
+; Synchronization Register Chain Length                            ; 2                  ; 2                  ;
+; Power Optimization During Synthesis                              ; Normal compilation ; Normal compilation ;
+; HDL message level                                                ; Level2             ; Level2             ;
+; Suppress Register Optimization Related Messages                  ; Off                ; Off                ;
+; Number of Removed Registers Reported in Synthesis Report         ; 5000               ; 5000               ;
+; Number of Swept Nodes Reported in Synthesis Report               ; 5000               ; 5000               ;
+; Number of Inverted Registers Reported in Synthesis Report        ; 100                ; 100                ;
+; Clock MUX Protection                                             ; On                 ; On                 ;
+; Auto Gated Clock Conversion                                      ; Off                ; Off                ;
+; Block Design Naming                                              ; Auto               ; Auto               ;
+; SDC constraint protection                                        ; Off                ; Off                ;
+; Synthesis Effort                                                 ; Auto               ; Auto               ;
+; Shift Register Replacement - Allow Asynchronous Clear Signal     ; On                 ; On                 ;
+; Pre-Mapping Resynthesis Optimization                             ; Off                ; Off                ;
+; Analysis & Synthesis Message Level                               ; Medium             ; Medium             ;
+; Disable Register Merging Across Hierarchies                      ; Auto               ; Auto               ;
+; Resource Aware Inference For Block RAM                           ; On                 ; On                 ;
++------------------------------------------------------------------+--------------------+--------------------+
+
+
++------------------------------------------+
+; Parallel Compilation                     ;
++----------------------------+-------------+
+; Processors                 ; Number      ;
++----------------------------+-------------+
+; Number detected on machine ; 8           ;
+; Maximum allowed            ; 4           ;
+;                            ;             ;
+; Average used               ; 1.00        ;
+; Maximum used               ; 4           ;
+;                            ;             ;
+; Usage by Processor         ; % Time Used ;
+;     Processor 1            ; 100.0%      ;
+;     Processor 2            ;   0.0%      ;
+;     Processor 3            ;   0.0%      ;
+;     Processor 4            ;   0.0%      ;
++----------------------------+-------------+
+
+
++----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Source Files Read                                                                                                                                                       ;
++----------------------------------+-----------------+---------------------------------------+---------------------------------------------------------------------------------------+---------+
+; File Name with User-Entered Path ; Used in Netlist ; File Type                             ; File Name with Absolute Path                                                          ; Library ;
++----------------------------------+-----------------+---------------------------------------+---------------------------------------------------------------------------------------+---------+
+; pc.v                             ; yes             ; User Verilog HDL File                 ; D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/pc.v                                ;         ;
+; reg_file.v                       ; yes             ; User Verilog HDL File                 ; D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/reg_file.v                          ;         ;
+; alu.v                            ; yes             ; User Verilog HDL File                 ; D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/alu.v                               ;         ;
+; decoder.v                        ; yes             ; User Verilog HDL File                 ; D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/decoder.v                           ;         ;
+; lsu.v                            ; yes             ; User Verilog HDL File                 ; D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/lsu.v                               ;         ;
+; cpu_core.v                       ; yes             ; User Verilog HDL File                 ; D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/cpu_core.v                          ;         ;
+; bus_decoder.v                    ; yes             ; User Verilog HDL File                 ; D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/bus_decoder.v                       ;         ;
+; vga_driver.v                     ; yes             ; User Verilog HDL File                 ; D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/vga_driver.v                        ;         ;
+; bram.v                           ; yes             ; User Verilog HDL File                 ; D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/bram.v                              ;         ;
+; soc_top.v                        ; yes             ; User Verilog HDL File                 ; D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/soc_top.v                           ;         ;
+; game_words.hex                   ; yes             ; User Hexadecimal (Intel-Format) File  ; D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/game_words.hex                      ;         ;
+; lpm_divide.tdf                   ; yes             ; Megafunction                          ; d:/quartusprimelite-kritagyastuff/quartus/libraries/megafunctions/lpm_divide.tdf      ;         ;
+; abs_divider.inc                  ; yes             ; Megafunction                          ; d:/quartusprimelite-kritagyastuff/quartus/libraries/megafunctions/abs_divider.inc     ;         ;
+; sign_div_unsign.inc              ; yes             ; Megafunction                          ; d:/quartusprimelite-kritagyastuff/quartus/libraries/megafunctions/sign_div_unsign.inc ;         ;
+; aglobal251.inc                   ; yes             ; Megafunction                          ; d:/quartusprimelite-kritagyastuff/quartus/libraries/megafunctions/aglobal251.inc      ;         ;
+; db/lpm_divide_8sl.tdf            ; yes             ; Auto-Generated Megafunction           ; D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/db/lpm_divide_8sl.tdf               ;         ;
+; db/sign_div_unsign_akh.tdf       ; yes             ; Auto-Generated Megafunction           ; D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/db/sign_div_unsign_akh.tdf          ;         ;
+; db/alt_u_div_uee.tdf             ; yes             ; Auto-Generated Megafunction           ; D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/db/alt_u_div_uee.tdf                ;         ;
+; db/add_sub_t3c.tdf               ; yes             ; Auto-Generated Megafunction           ; D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/db/add_sub_t3c.tdf                  ;         ;
+; db/add_sub_u3c.tdf               ; yes             ; Auto-Generated Megafunction           ; D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/db/add_sub_u3c.tdf                  ;         ;
+; db/lpm_divide_bkl.tdf            ; yes             ; Auto-Generated Megafunction           ; D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/db/lpm_divide_bkl.tdf               ;         ;
++----------------------------------+-----------------+---------------------------------------+---------------------------------------------------------------------------------------+---------+
+
+
++--------------------------------------------------------------+
+; Analysis & Synthesis Resource Usage Summary                  ;
++---------------------------------------------+----------------+
+; Resource                                    ; Usage          ;
++---------------------------------------------+----------------+
+; Estimated Total logic elements              ; 12,118         ;
+;                                             ;                ;
+; Total combinational functions               ; 6912           ;
+; Logic element usage by number of LUT inputs ;                ;
+;     -- 4 input functions                    ; 5494           ;
+;     -- 3 input functions                    ; 992            ;
+;     -- <=2 input functions                  ; 426            ;
+;                                             ;                ;
+; Logic elements by mode                      ;                ;
+;     -- normal mode                          ; 6344           ;
+;     -- arithmetic mode                      ; 568            ;
+;                                             ;                ;
+; Total registers                             ; 5417           ;
+;     -- Dedicated logic registers            ; 5417           ;
+;     -- I/O registers                        ; 0              ;
+;                                             ;                ;
+; I/O pins                                    ; 27             ;
+;                                             ;                ;
+; Embedded Multiplier 9-bit elements          ; 0              ;
+;                                             ;                ;
+; Maximum fan-out node                        ; CLOCK_50~input ;
+; Maximum fan-out                             ; 4302           ;
+; Total fan-out                               ; 42150          ;
+; Average fan-out                             ; 3.40           ;
++---------------------------------------------+----------------+
+
+
++---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Analysis & Synthesis Resource Utilization by Entity                                                                                                                                                                                                                                                                                         ;
++----------------------------------------+---------------------+---------------------------+-------------+------------+--------------+---------+-----------+------+--------------+------------+----------------------------------------------------------------------------------------------------------+---------------------+--------------+
+; Compilation Hierarchy Node             ; Combinational ALUTs ; Dedicated Logic Registers ; Memory Bits ; UFM Blocks ; DSP Elements ; DSP 9x9 ; DSP 18x18 ; Pins ; Virtual Pins ; ADC blocks ; Full Hierarchy Name                                                                                      ; Entity Name         ; Library Name ;
++----------------------------------------+---------------------+---------------------------+-------------+------------+--------------+---------+-----------+------+--------------+------------+----------------------------------------------------------------------------------------------------------+---------------------+--------------+
+; |soc_top                               ; 6912 (876)          ; 5417 (211)                ; 0           ; 0          ; 0            ; 0       ; 0         ; 27   ; 0            ; 0          ; |soc_top                                                                                                 ; soc_top             ; work         ;
+;    |bram:main_memory|                  ; 3149 (3149)         ; 4128 (4128)               ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |soc_top|bram:main_memory                                                                                ; bram                ; work         ;
+;    |bus_decoder:bus|                   ; 2 (2)               ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |soc_top|bus_decoder:bus                                                                                 ; bus_decoder         ; work         ;
+;    |cpu_core:cpu|                      ; 2752 (343)          ; 1056 (0)                  ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |soc_top|cpu_core:cpu                                                                                    ; cpu_core            ; work         ;
+;       |alu:alu_inst|                   ; 748 (748)           ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |soc_top|cpu_core:cpu|alu:alu_inst                                                                       ; alu                 ; work         ;
+;       |decoder:dec_inst|               ; 114 (114)           ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |soc_top|cpu_core:cpu|decoder:dec_inst                                                                   ; decoder             ; work         ;
+;       |lsu:lsu_inst|                   ; 65 (65)             ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |soc_top|cpu_core:cpu|lsu:lsu_inst                                                                       ; lsu                 ; work         ;
+;       |pc:pc_inst|                     ; 30 (30)             ; 32 (32)                   ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |soc_top|cpu_core:cpu|pc:pc_inst                                                                         ; pc                  ; work         ;
+;       |reg_file:reg_inst|              ; 1452 (1452)         ; 1024 (1024)               ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |soc_top|cpu_core:cpu|reg_file:reg_inst                                                                  ; reg_file            ; work         ;
+;    |lpm_divide:Div0|                   ; 43 (0)              ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |soc_top|lpm_divide:Div0                                                                                 ; lpm_divide          ; work         ;
+;       |lpm_divide_8sl:auto_generated|  ; 43 (0)              ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |soc_top|lpm_divide:Div0|lpm_divide_8sl:auto_generated                                                   ; lpm_divide_8sl      ; work         ;
+;          |sign_div_unsign_akh:divider| ; 43 (0)              ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |soc_top|lpm_divide:Div0|lpm_divide_8sl:auto_generated|sign_div_unsign_akh:divider                       ; sign_div_unsign_akh ; work         ;
+;             |alt_u_div_uee:divider|    ; 43 (43)             ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |soc_top|lpm_divide:Div0|lpm_divide_8sl:auto_generated|sign_div_unsign_akh:divider|alt_u_div_uee:divider ; alt_u_div_uee       ; work         ;
+;    |lpm_divide:Mod0|                   ; 46 (0)              ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |soc_top|lpm_divide:Mod0                                                                                 ; lpm_divide          ; work         ;
+;       |lpm_divide_bkl:auto_generated|  ; 46 (0)              ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |soc_top|lpm_divide:Mod0|lpm_divide_bkl:auto_generated                                                   ; lpm_divide_bkl      ; work         ;
+;          |sign_div_unsign_akh:divider| ; 46 (0)              ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |soc_top|lpm_divide:Mod0|lpm_divide_bkl:auto_generated|sign_div_unsign_akh:divider                       ; sign_div_unsign_akh ; work         ;
+;             |alt_u_div_uee:divider|    ; 46 (46)             ; 0 (0)                     ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |soc_top|lpm_divide:Mod0|lpm_divide_bkl:auto_generated|sign_div_unsign_akh:divider|alt_u_div_uee:divider ; alt_u_div_uee       ; work         ;
+;    |vga_driver:display|                ; 44 (44)             ; 22 (22)                   ; 0           ; 0          ; 0            ; 0       ; 0         ; 0    ; 0            ; 0          ; |soc_top|vga_driver:display                                                                              ; vga_driver          ; work         ;
++----------------------------------------+---------------------+---------------------------+-------------+------------+--------------+---------+-----------+------+--------------+------------+----------------------------------------------------------------------------------------------------------+---------------------+--------------+
+Note: For table entries with two numbers listed, the numbers in parentheses indicate the number of resources of the given type used by the specific entity alone. The numbers listed outside of parentheses indicate the total resources of the given type used by the specific entity and all of its sub-entities in the hierarchy.
+
+
++---------------------------------------------------------------------------------+
+; Registers Removed During Synthesis                                              ;
++---------------------------------------+-----------------------------------------+
+; Register name                         ; Reason for Removal                      ;
++---------------------------------------+-----------------------------------------+
+; vga_driver:display|clk_en             ; Merged with cpu_clk_div[0]              ;
+; visual_counter[0]                     ; Merged with cpu_clk_div[0]              ;
+; cpu_clk_div[1]                        ; Merged with vga_driver:display|h_cnt[0] ;
+; Total Number of Removed Registers = 3 ;                                         ;
++---------------------------------------+-----------------------------------------+
+
+
++------------------------------------------------------+
+; General Register Statistics                          ;
++----------------------------------------------+-------+
+; Statistic                                    ; Value ;
++----------------------------------------------+-------+
+; Total registers                              ; 5417  ;
+; Number of registers using Synchronous Clear  ; 0     ;
+; Number of registers using Synchronous Load   ; 30    ;
+; Number of registers using Asynchronous Clear ; 257   ;
+; Number of registers using Asynchronous Load  ; 0     ;
+; Number of registers using Clock Enable       ; 5209  ;
+; Number of registers using Preset             ; 0     ;
++----------------------------------------------+-------+
+
+
++---------------------------------------------------+
+; Inverted Register Statistics                      ;
++-----------------------------------------+---------+
+; Inverted Register                       ; Fan out ;
++-----------------------------------------+---------+
+; game_sync2[47]                          ; 10      ;
+; game_sync2[43]                          ; 12      ;
+; game_sync2[42]                          ; 14      ;
+; game_sync2[38]                          ; 2       ;
+; game_sync2[36]                          ; 3       ;
+; game_sync2[31]                          ; 2       ;
+; game_sync2[26]                          ; 2       ;
+; game_sync2[23]                          ; 2       ;
+; game_sync2[18]                          ; 2       ;
+; game_sync2[15]                          ; 3       ;
+; game_sync2[16]                          ; 2       ;
+; game_sync2[14]                          ; 4       ;
+; game_sync2[12]                          ; 2       ;
+; game_sync2[11]                          ; 2       ;
+; game_sync2[10]                          ; 2       ;
+; game_sync2[8]                           ; 3       ;
+; game_sync2[9]                           ; 2       ;
+; game_sync2[5]                           ; 2       ;
+; game_sync2[1]                           ; 3       ;
+; game_sync2[2]                           ; 2       ;
+; game_sync2[50]                          ; 3       ;
+; game_sync2[51]                          ; 1       ;
+; vga_driver:display|hsync                ; 1       ;
+; vga_driver:display|vsync                ; 1       ;
+; lives_reg[1]                            ; 4       ;
+; lives_reg[0]                            ; 3       ;
+; game_sync1[47]                          ; 1       ;
+; game_sync1[43]                          ; 1       ;
+; game_sync1[42]                          ; 1       ;
+; game_sync1[38]                          ; 1       ;
+; game_sync1[36]                          ; 1       ;
+; game_sync1[31]                          ; 1       ;
+; game_sync1[26]                          ; 1       ;
+; game_sync1[23]                          ; 1       ;
+; game_sync1[18]                          ; 1       ;
+; game_sync1[15]                          ; 1       ;
+; game_sync1[16]                          ; 1       ;
+; game_sync1[14]                          ; 1       ;
+; game_sync1[12]                          ; 1       ;
+; game_sync1[11]                          ; 1       ;
+; game_sync1[10]                          ; 1       ;
+; game_sync1[8]                           ; 1       ;
+; game_sync1[9]                           ; 1       ;
+; game_sync1[5]                           ; 1       ;
+; game_sync1[1]                           ; 1       ;
+; game_sync1[2]                           ; 1       ;
+; game_sync1[50]                          ; 1       ;
+; game_sync1[51]                          ; 1       ;
+; basket_x_reg[5]                         ; 1       ;
+; basket_x_reg[1]                         ; 1       ;
+; basket_x_reg[0]                         ; 1       ;
+; fruit1_x_reg[3]                         ; 1       ;
+; fruit1_x_reg[1]                         ; 1       ;
+; fruit1_y_reg[3]                         ; 1       ;
+; fruit2_x_reg[5]                         ; 1       ;
+; fruit2_x_reg[2]                         ; 1       ;
+; fruit2_y_reg[4]                         ; 1       ;
+; fruit2_y_reg[1]                         ; 1       ;
+; fruit2_y_reg[2]                         ; 1       ;
+; fruit2_y_reg[0]                         ; 1       ;
+; fruit3_x_reg[5]                         ; 1       ;
+; fruit3_x_reg[4]                         ; 1       ;
+; fruit3_x_reg[3]                         ; 1       ;
+; fruit3_x_reg[1]                         ; 1       ;
+; fruit3_x_reg[2]                         ; 1       ;
+; fruit3_y_reg[5]                         ; 1       ;
+; fruit3_y_reg[1]                         ; 1       ;
+; fruit3_y_reg[2]                         ; 1       ;
+; Total number of inverted registers = 68 ;         ;
++-----------------------------------------+---------+
+
+
++-----------------------------------------------------------------------------------------------------------------------------------------------------------------+
+; Multiplexer Restructuring Statistics (Restructuring Performed)                                                                                                  ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+---------------------------------------------------+
+; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output                        ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+---------------------------------------------------+
+; 3:1                ; 30 bits   ; 60 LEs        ; 60 LEs               ; 0 LEs                  ; Yes        ; |soc_top|cpu_core:cpu|pc:pc_inst|pc_out[5]        ;
+; 3:1                ; 4 bits    ; 8 LEs         ; 4 LEs                ; 4 LEs                  ; No         ; |soc_top|cpu_core:cpu|decoder:dec_inst|Selector1  ;
+; 3:1                ; 11 bits   ; 22 LEs        ; 22 LEs               ; 0 LEs                  ; No         ; |soc_top|cpu_core:cpu|decoder:dec_inst|Selector9  ;
+; 3:1                ; 8 bits    ; 16 LEs        ; 16 LEs               ; 0 LEs                  ; No         ; |soc_top|cpu_core:cpu|lsu:lsu_inst|Selector1      ;
+; 5:1                ; 16 bits   ; 48 LEs        ; 48 LEs               ; 0 LEs                  ; No         ; |soc_top|cpu_core:cpu|rd_data[22]                 ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |soc_top|glyph_bit                                ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |soc_top|glyph_bit                                ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |soc_top|glyph_bit                                ;
+; 3:1                ; 2 bits    ; 4 LEs         ; 4 LEs                ; 0 LEs                  ; No         ; |soc_top|glyph_bit                                ;
+; 6:1                ; 8 bits    ; 32 LEs        ; 32 LEs               ; 0 LEs                  ; No         ; |soc_top|cpu_core:cpu|rd_data[11]                 ;
+; 5:1                ; 2 bits    ; 6 LEs         ; 4 LEs                ; 2 LEs                  ; No         ; |soc_top|glyph_bit                                ;
+; 8:1                ; 6 bits    ; 30 LEs        ; 18 LEs               ; 12 LEs                 ; No         ; |soc_top|cpu_core:cpu|decoder:dec_inst|Selector24 ;
+; 7:1                ; 2 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |soc_top|heart_pixel                              ;
+; 7:1                ; 2 bits    ; 8 LEs         ; 8 LEs                ; 0 LEs                  ; No         ; |soc_top|heart_pixel                              ;
+; 9:1                ; 4 bits    ; 24 LEs        ; 16 LEs               ; 8 LEs                  ; No         ; |soc_top|cpu_core:cpu|decoder:dec_inst|Selector28 ;
+; 8:1                ; 8 bits    ; 40 LEs        ; 16 LEs               ; 24 LEs                 ; No         ; |soc_top|cpu_core:cpu|decoder:dec_inst|Selector14 ;
+; 19:1               ; 8 bits    ; 96 LEs        ; 64 LEs               ; 32 LEs                 ; No         ; |soc_top|cpu_core:cpu|alu:alu_inst|Mux21          ;
+; 20:1               ; 7 bits    ; 91 LEs        ; 56 LEs               ; 35 LEs                 ; No         ; |soc_top|cpu_core:cpu|alu:alu_inst|Mux14          ;
+; 39:1               ; 2 bits    ; 52 LEs        ; 16 LEs               ; 36 LEs                 ; No         ; |soc_top|cpu_core:cpu|decoder:dec_inst|Selector33 ;
+; 7:1                ; 5 bits    ; 20 LEs        ; 20 LEs               ; 0 LEs                  ; No         ; |soc_top|cpu_core:cpu|rd_data[5]                  ;
+; 20:1               ; 4 bits    ; 52 LEs        ; 32 LEs               ; 20 LEs                 ; No         ; |soc_top|cpu_core:cpu|alu:alu_inst|Mux24          ;
+; 21:1               ; 4 bits    ; 56 LEs        ; 32 LEs               ; 24 LEs                 ; No         ; |soc_top|cpu_core:cpu|alu:alu_inst|Mux4           ;
+; 8:1                ; 2 bits    ; 10 LEs        ; 8 LEs                ; 2 LEs                  ; No         ; |soc_top|cpu_core:cpu|rd_data[1]                  ;
+; 21:1               ; 2 bits    ; 28 LEs        ; 18 LEs               ; 10 LEs                 ; No         ; |soc_top|cpu_core:cpu|alu:alu_inst|Mux28          ;
+; 22:1               ; 2 bits    ; 28 LEs        ; 20 LEs               ; 8 LEs                  ; No         ; |soc_top|cpu_core:cpu|alu:alu_inst|Mux3           ;
++--------------------+-----------+---------------+----------------------+------------------------+------------+---------------------------------------------------+
+
+
++------------------------------------------------------------------+
+; Parameter Settings for Inferred Entity Instance: lpm_divide:Div0 ;
++------------------------+----------------+------------------------+
+; Parameter Name         ; Value          ; Type                   ;
++------------------------+----------------+------------------------+
+; LPM_WIDTHN             ; 7              ; Untyped                ;
+; LPM_WIDTHD             ; 4              ; Untyped                ;
+; LPM_NREPRESENTATION    ; UNSIGNED       ; Untyped                ;
+; LPM_DREPRESENTATION    ; UNSIGNED       ; Untyped                ;
+; LPM_PIPELINE           ; 0              ; Untyped                ;
+; LPM_REMAINDERPOSITIVE  ; TRUE           ; Untyped                ;
+; MAXIMIZE_SPEED         ; 5              ; Untyped                ;
+; CBXI_PARAMETER         ; lpm_divide_8sl ; Untyped                ;
+; CARRY_CHAIN            ; MANUAL         ; Untyped                ;
+; OPTIMIZE_FOR_SPEED     ; 5              ; Untyped                ;
+; AUTO_CARRY_CHAINS      ; ON             ; AUTO_CARRY             ;
+; IGNORE_CARRY_BUFFERS   ; OFF            ; IGNORE_CARRY           ;
+; AUTO_CASCADE_CHAINS    ; ON             ; AUTO_CASCADE           ;
+; IGNORE_CASCADE_BUFFERS ; OFF            ; IGNORE_CASCADE         ;
++------------------------+----------------+------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++------------------------------------------------------------------+
+; Parameter Settings for Inferred Entity Instance: lpm_divide:Mod0 ;
++------------------------+----------------+------------------------+
+; Parameter Name         ; Value          ; Type                   ;
++------------------------+----------------+------------------------+
+; LPM_WIDTHN             ; 7              ; Untyped                ;
+; LPM_WIDTHD             ; 4              ; Untyped                ;
+; LPM_NREPRESENTATION    ; UNSIGNED       ; Untyped                ;
+; LPM_DREPRESENTATION    ; UNSIGNED       ; Untyped                ;
+; LPM_PIPELINE           ; 0              ; Untyped                ;
+; LPM_REMAINDERPOSITIVE  ; TRUE           ; Untyped                ;
+; MAXIMIZE_SPEED         ; 5              ; Untyped                ;
+; CBXI_PARAMETER         ; lpm_divide_bkl ; Untyped                ;
+; CARRY_CHAIN            ; MANUAL         ; Untyped                ;
+; OPTIMIZE_FOR_SPEED     ; 5              ; Untyped                ;
+; AUTO_CARRY_CHAINS      ; ON             ; AUTO_CARRY             ;
+; IGNORE_CARRY_BUFFERS   ; OFF            ; IGNORE_CARRY           ;
+; AUTO_CASCADE_CHAINS    ; ON             ; AUTO_CASCADE           ;
+; IGNORE_CASCADE_BUFFERS ; OFF            ; IGNORE_CASCADE         ;
++------------------------+----------------+------------------------+
+Note: In order to hide this table in the UI and the text report file, please set the "Show Parameter Settings in Synthesis Report" option in "Analysis and Synthesis Settings -> More Settings" to "Off".
+
+
++------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "bus_decoder:bus"                                                                      ;
++--------+--------+----------+-------------------------------------------------------------------------------------+
+; Port   ; Type   ; Severity ; Details                                                                             ;
++--------+--------+----------+-------------------------------------------------------------------------------------+
+; cs_vga ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
++--------+--------+----------+-------------------------------------------------------------------------------------+
+
+
++-----------------------------------------------------+
+; Port Connectivity Checks: "cpu_core:cpu|pc:pc_inst" ;
++----------+-------+----------+-----------------------+
+; Port     ; Type  ; Severity ; Details               ;
++----------+-------+----------+-----------------------+
+; pc_write ; Input ; Info     ; Stuck at VCC          ;
++----------+-------+----------+-----------------------+
+
+
++------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "cpu_core:cpu|decoder:dec_inst"                                                        ;
++--------+--------+----------+-------------------------------------------------------------------------------------+
+; Port   ; Type   ; Severity ; Details                                                                             ;
++--------+--------+----------+-------------------------------------------------------------------------------------+
+; funct7 ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
++--------+--------+----------+-------------------------------------------------------------------------------------+
+
+
++--------------------------------------------------------------------------------------------------------------------------+
+; Port Connectivity Checks: "cpu_core:cpu"                                                                                 ;
++----------------+--------+----------+-------------------------------------------------------------------------------------+
+; Port           ; Type   ; Severity ; Details                                                                             ;
++----------------+--------+----------+-------------------------------------------------------------------------------------+
+; pc_out[31..13] ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
+; pc_out[1..0]   ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
+; mem_read       ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
+; mem_byte_en    ; Output ; Info     ; Connected to dangling logic. Logic that only feeds a dangling port will be removed. ;
++----------------+--------+----------+-------------------------------------------------------------------------------------+
+
+
++-----------------------------------------------------+
+; Post-Synthesis Netlist Statistics for Top Partition ;
++-----------------------+-----------------------------+
+; Type                  ; Count                       ;
++-----------------------+-----------------------------+
+; boundary_port         ; 27                          ;
+; cycloneiii_ff         ; 5417                        ;
+;     CLR               ; 145                         ;
+;     CLR SLD           ; 30                          ;
+;     ENA               ; 5127                        ;
+;     ENA CLR           ; 82                          ;
+;     plain             ; 33                          ;
+; cycloneiii_lcell_comb ; 6915                        ;
+;     arith             ; 568                         ;
+;         2 data inputs ; 152                         ;
+;         3 data inputs ; 416                         ;
+;     normal            ; 6347                        ;
+;         0 data inputs ; 8                           ;
+;         1 data inputs ; 52                          ;
+;         2 data inputs ; 217                         ;
+;         3 data inputs ; 576                         ;
+;         4 data inputs ; 5494                        ;
+;                       ;                             ;
+; Max LUT depth         ; 27.00                       ;
+; Average LUT depth     ; 15.88                       ;
++-----------------------+-----------------------------+
+
+
++-------------------------------+
+; Elapsed Time Per Partition    ;
++----------------+--------------+
+; Partition Name ; Elapsed Time ;
++----------------+--------------+
+; Top            ; 00:00:33     ;
++----------------+--------------+
+
+
++-------------------------------+
+; Analysis & Synthesis Messages ;
++-------------------------------+
+Info: *******************************************************************
+Info: Running Quartus Prime Analysis & Synthesis
+    Info: Version 25.1std.0 Build 1129 10/21/2025 SC Lite Edition
+    Info: Processing started: Sun Aug 30 22:01:09 2026
+Info: Command: quartus_map --read_settings_files=on --write_settings_files=off cpuFPGA -c pc_hw_test
+Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
+Info (20030): Parallel compilation is enabled and will use 4 of the 4 processors detected
+Info (12021): Found 1 design units, including 1 entities, in source file pc.v
+    Info (12023): Found entity 1: pc File: D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/pc.v Line: 1
+Info (12021): Found 1 design units, including 1 entities, in source file pc_hw_test.v
+    Info (12023): Found entity 1: pc_hw_test File: D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/pc_hw_test.v Line: 1
+Info (12021): Found 1 design units, including 1 entities, in source file reg_file.v
+    Info (12023): Found entity 1: reg_file File: D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/reg_file.v Line: 1
+Info (12021): Found 1 design units, including 1 entities, in source file alu.v
+    Info (12023): Found entity 1: alu File: D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/alu.v Line: 1
+Info (12021): Found 1 design units, including 1 entities, in source file decoder.v
+    Info (12023): Found entity 1: decoder File: D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/decoder.v Line: 1
+Info (12021): Found 1 design units, including 1 entities, in source file lsu.v
+    Info (12023): Found entity 1: lsu File: D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/lsu.v Line: 1
+Info (12021): Found 1 design units, including 1 entities, in source file cpu_core.v
+    Info (12023): Found entity 1: cpu_core File: D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/cpu_core.v Line: 1
+Info (12021): Found 1 design units, including 1 entities, in source file bus_decoder.v
+    Info (12023): Found entity 1: bus_decoder File: D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/bus_decoder.v Line: 1
+Info (12021): Found 1 design units, including 1 entities, in source file vga_driver.v
+    Info (12023): Found entity 1: vga_driver File: D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/vga_driver.v Line: 1
+Info (12021): Found 1 design units, including 1 entities, in source file bram.v
+    Info (12023): Found entity 1: bram File: D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/bram.v Line: 1
+Info (12021): Found 1 design units, including 1 entities, in source file vga_framebuffer.v
+    Info (12023): Found entity 1: vga_framebuffer File: D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/vga_framebuffer.v Line: 1
+Info (12021): Found 1 design units, including 1 entities, in source file soc_top.v
+    Info (12023): Found entity 1: soc_top File: D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/soc_top.v Line: 1
+Info (12021): Found 1 design units, including 1 entities, in source file alu_hw_test.v
+    Info (12023): Found entity 1: alu_hw_test File: D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/alu_hw_test.v Line: 1
+Info (12127): Elaborating entity "soc_top" for the top level hierarchy
+Warning (10762): Verilog HDL Case Statement warning at soc_top.v(178): can't check case statement for completeness because the case expression has too many possible states File: D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/soc_top.v Line: 178
+Warning (10230): Verilog HDL assignment warning at soc_top.v(420): truncated value with size 7 to match size of target (3) File: D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/soc_top.v Line: 420
+Warning (10270): Verilog HDL Case Statement warning at soc_top.v(324): incomplete case statement has no default case item File: D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/soc_top.v Line: 324
+Warning (10270): Verilog HDL Case Statement warning at soc_top.v(369): incomplete case statement has no default case item File: D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/soc_top.v Line: 369
+Warning (10270): Verilog HDL Case Statement warning at soc_top.v(396): incomplete case statement has no default case item File: D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/soc_top.v Line: 396
+Warning (10270): Verilog HDL Case Statement warning at soc_top.v(342): incomplete case statement has no default case item File: D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/soc_top.v Line: 342
+Warning (10270): Verilog HDL Case Statement warning at soc_top.v(387): incomplete case statement has no default case item File: D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/soc_top.v Line: 387
+Warning (10270): Verilog HDL Case Statement warning at soc_top.v(306): incomplete case statement has no default case item File: D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/soc_top.v Line: 306
+Warning (10270): Verilog HDL Case Statement warning at soc_top.v(288): incomplete case statement has no default case item File: D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/soc_top.v Line: 288
+Warning (10270): Verilog HDL Case Statement warning at soc_top.v(333): incomplete case statement has no default case item File: D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/soc_top.v Line: 333
+Warning (10270): Verilog HDL Case Statement warning at soc_top.v(315): incomplete case statement has no default case item File: D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/soc_top.v Line: 315
+Warning (10230): Verilog HDL assignment warning at soc_top.v(446): truncated value with size 7 to match size of target (3) File: D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/soc_top.v Line: 446
+Warning (10270): Verilog HDL Case Statement warning at soc_top.v(360): incomplete case statement has no default case item File: D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/soc_top.v Line: 360
+Warning (10270): Verilog HDL Case Statement warning at soc_top.v(378): incomplete case statement has no default case item File: D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/soc_top.v Line: 378
+Warning (10230): Verilog HDL assignment warning at soc_top.v(467): truncated value with size 7 to match size of target (3) File: D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/soc_top.v Line: 467
+Warning (10270): Verilog HDL Case Statement warning at soc_top.v(351): incomplete case statement has no default case item File: D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/soc_top.v Line: 351
+Warning (10270): Verilog HDL Case Statement warning at soc_top.v(297): incomplete case statement has no default case item File: D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/soc_top.v Line: 297
+Warning (10230): Verilog HDL assignment warning at soc_top.v(528): truncated value with size 7 to match size of target (4) File: D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/soc_top.v Line: 528
+Warning (10230): Verilog HDL assignment warning at soc_top.v(529): truncated value with size 7 to match size of target (4) File: D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/soc_top.v Line: 529
+Warning (10230): Verilog HDL assignment warning at soc_top.v(618): truncated value with size 10 to match size of target (7) File: D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/soc_top.v Line: 618
+Warning (10230): Verilog HDL assignment warning at soc_top.v(619): truncated value with size 10 to match size of target (7) File: D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/soc_top.v Line: 619
+Warning (10230): Verilog HDL assignment warning at soc_top.v(699): truncated value with size 10 to match size of target (4) File: D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/soc_top.v Line: 699
+Warning (10230): Verilog HDL assignment warning at soc_top.v(700): truncated value with size 10 to match size of target (4) File: D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/soc_top.v Line: 700
+Warning (10230): Verilog HDL assignment warning at soc_top.v(701): truncated value with size 10 to match size of target (4) File: D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/soc_top.v Line: 701
+Warning (10230): Verilog HDL assignment warning at soc_top.v(702): truncated value with size 10 to match size of target (4) File: D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/soc_top.v Line: 702
+Warning (10230): Verilog HDL assignment warning at soc_top.v(703): truncated value with size 10 to match size of target (4) File: D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/soc_top.v Line: 703
+Warning (10230): Verilog HDL assignment warning at soc_top.v(704): truncated value with size 10 to match size of target (4) File: D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/soc_top.v Line: 704
+Info (12128): Elaborating entity "cpu_core" for hierarchy "cpu_core:cpu" File: D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/soc_top.v Line: 76
+Info (12128): Elaborating entity "decoder" for hierarchy "cpu_core:cpu|decoder:dec_inst" File: D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/cpu_core.v Line: 25
+Info (12128): Elaborating entity "pc" for hierarchy "cpu_core:cpu|pc:pc_inst" File: D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/cpu_core.v Line: 51
+Info (12128): Elaborating entity "reg_file" for hierarchy "cpu_core:cpu|reg_file:reg_inst" File: D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/cpu_core.v Line: 62
+Info (12128): Elaborating entity "alu" for hierarchy "cpu_core:cpu|alu:alu_inst" File: D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/cpu_core.v Line: 69
+Info (12128): Elaborating entity "lsu" for hierarchy "cpu_core:cpu|lsu:lsu_inst" File: D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/cpu_core.v Line: 75
+Info (12128): Elaborating entity "bus_decoder" for hierarchy "bus_decoder:bus" File: D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/soc_top.v Line: 92
+Info (12128): Elaborating entity "bram" for hierarchy "bram:main_memory" File: D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/soc_top.v Line: 109
+Warning (10850): Verilog HDL warning at bram.v(72): number of words (102) in memory file does not match the number of elements in the address range [0:127] File: D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/bram.v Line: 72
+Warning (10030): Net "inst_rom.data_a" at bram.v(31) has no driver or initial value, using a default initial value '0' File: D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/bram.v Line: 31
+Warning (10030): Net "inst_rom.waddr_a" at bram.v(31) has no driver or initial value, using a default initial value '0' File: D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/bram.v Line: 31
+Warning (10030): Net "inst_rom.we_a" at bram.v(31) has no driver or initial value, using a default initial value '0' File: D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/bram.v Line: 31
+Info (12128): Elaborating entity "vga_driver" for hierarchy "vga_driver:display" File: D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/soc_top.v Line: 264
+Info (276014): Found 3 instances of uninferred RAM logic
+    Info (276007): RAM logic "cpu_core:cpu|reg_file:reg_inst|regs" is uninferred due to asynchronous read logic File: D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/reg_file.v Line: 12
+    Info (276013): RAM logic "bram:main_memory|inst_rom" is uninferred because MIF is not supported for the selected family File: D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/bram.v Line: 31
+    Info (276013): RAM logic "bram:main_memory|data_ram" is uninferred because MIF is not supported for the selected family File: D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/bram.v Line: 51
+Info (278001): Inferred 2 megafunctions from design logic
+    Info (278004): Inferred divider/modulo megafunction ("lpm_divide") from the following logic: "Div0" File: D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/soc_top.v Line: 528
+    Info (278004): Inferred divider/modulo megafunction ("lpm_divide") from the following logic: "Mod0" File: D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/soc_top.v Line: 529
+Info (12130): Elaborated megafunction instantiation "lpm_divide:Div0" File: D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/soc_top.v Line: 528
+Info (12133): Instantiated megafunction "lpm_divide:Div0" with the following parameter: File: D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/soc_top.v Line: 528
+    Info (12134): Parameter "LPM_WIDTHN" = "7"
+    Info (12134): Parameter "LPM_WIDTHD" = "4"
+    Info (12134): Parameter "LPM_NREPRESENTATION" = "UNSIGNED"
+    Info (12134): Parameter "LPM_DREPRESENTATION" = "UNSIGNED"
+Info (12021): Found 1 design units, including 1 entities, in source file db/lpm_divide_8sl.tdf
+    Info (12023): Found entity 1: lpm_divide_8sl File: D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/db/lpm_divide_8sl.tdf Line: 25
+Info (12021): Found 1 design units, including 1 entities, in source file db/sign_div_unsign_akh.tdf
+    Info (12023): Found entity 1: sign_div_unsign_akh File: D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/db/sign_div_unsign_akh.tdf Line: 25
+Info (12021): Found 1 design units, including 1 entities, in source file db/alt_u_div_uee.tdf
+    Info (12023): Found entity 1: alt_u_div_uee File: D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/db/alt_u_div_uee.tdf Line: 27
+Info (12021): Found 1 design units, including 1 entities, in source file db/add_sub_t3c.tdf
+    Info (12023): Found entity 1: add_sub_t3c File: D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/db/add_sub_t3c.tdf Line: 23
+Info (12021): Found 1 design units, including 1 entities, in source file db/add_sub_u3c.tdf
+    Info (12023): Found entity 1: add_sub_u3c File: D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/db/add_sub_u3c.tdf Line: 23
+Info (12130): Elaborated megafunction instantiation "lpm_divide:Mod0" File: D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/soc_top.v Line: 529
+Info (12133): Instantiated megafunction "lpm_divide:Mod0" with the following parameter: File: D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/soc_top.v Line: 529
+    Info (12134): Parameter "LPM_WIDTHN" = "7"
+    Info (12134): Parameter "LPM_WIDTHD" = "4"
+    Info (12134): Parameter "LPM_NREPRESENTATION" = "UNSIGNED"
+    Info (12134): Parameter "LPM_DREPRESENTATION" = "UNSIGNED"
+Info (12021): Found 1 design units, including 1 entities, in source file db/lpm_divide_bkl.tdf
+    Info (12023): Found entity 1: lpm_divide_bkl File: D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/db/lpm_divide_bkl.tdf Line: 25
+Info (13000): Registers with preset signals will power-up high File: D:/QuartusPrimeLite-KritagyaStuff/cpuFPGA_Project/soc_top.v Line: 218
+Info (13003): DEV_CLRn pin will set, and not reset, register with preset signal due to NOT Gate Push-Back
+Info (286030): Timing-Driven Synthesis is running
+Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
+    Info (16011): Adding 0 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
+Info (21057): Implemented 12209 device resources after synthesis - the final resource count might be different
+    Info (21058): Implemented 3 input pins
+    Info (21059): Implemented 24 output pins
+    Info (21061): Implemented 12182 logic cells
+Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 32 warnings
+    Info: Peak virtual memory: 4840 megabytes
+    Info: Processing ended: Sun Aug 30 22:01:51 2026
+    Info: Elapsed time: 00:00:42
+    Info: Total CPU time (on all processors): 00:00:52
+
+
