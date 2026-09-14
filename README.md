@@ -258,18 +258,6 @@ This project combines concepts from computer architecture and digital hardware d
 
 Rather than testing the CPU only through simulation, the processor is integrated into a complete interactive hardware application.
 
-## Possible Improvements
-
-- Add additional levels and increasing difficulty
-- Add more fruit types and scoring values
-- Add a start/pause menu
-- Add sound effects through an audio interface
-- Add seven-segment score output
-- Expand the CPU instruction set
-- Add additional memory-mapped peripherals
-- Add automated simulation testbenches for CPU instructions
-- Add a hardware architecture diagram generated directly from the RTL
-- Add keyboard or external controller support
 
 ## Author
 
