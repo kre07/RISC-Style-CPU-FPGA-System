@@ -36,14 +36,23 @@ module alu (
             // can shift from 0 to 31 positions
             
             ALU_SRL:    result = a >> b[4:0];
-            // Logical shift RIGHT
-            // Empty bits are filled with 0s
+            // Logical shift RIGHT, and puts 0s on the left
+ 
             
             ALU_SRA:    result = $signed(a) >>> b[4:0];
-            ALU_SLT:    result = ($signed(a) < $signed(b)) ? 32'd1 : 32'd0;
-            ALU_SLTU:   result = (a < b) ? 32'd1 : 32'd0;
-            ALU_PASS_B: result = b;
-            default:    result = 32'd0;
+            // Also shifts right but this is for SIGNED NUMBERS (Negitaves and positives)
+            
+            ALU_SLT:    result = ($signed(a) < $signed(b)) ? 32'd1 : 32'd0; // Signed Comparison
+                // SLT = Set Less Than
+                // Treat a and b as SIGNED numbers
+                // If a < b:
+            // result = 1(True, A is less than B) 
+                // Otherwise:
+            // result = 0 (False, A is not less than B)
+            ALU_SLTU:   result = (a < b) ? 32'd1 : 32'd0; // Unsigned Comparison
+            // Same as SLT, but with unsigned numbers
+            ALU_PASS_B: result = b;  // Send b directly to the output (No comparison)
+            default:    result = 32'd0; // If the alu does not pick a operation, set result=0
         endcase
     end
 
