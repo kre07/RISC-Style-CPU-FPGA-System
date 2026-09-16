@@ -18,7 +18,7 @@ module alu (
                ALU_PASS_B = 4'b1010;
 
     always @(*) begin
-        case (alu_op)
+        case (alu_op) // Depending on what operation you choose, it chooses an calculation from the list below
             ALU_ADD:    result = a + b;
             ALU_SUB:    result = a - b;
             ALU_AND:    result = a & b;
