@@ -1,12 +1,12 @@
 module decoder (
-    input wire [31:0] instr,
-    output wire [6:0] opcode,
-    output wire [4:0] rd,
-    output wire [4:0] rs1,
-    output wire [4:0] rs2,
-    output wire [2:0] funct3,
-    output wire [6:0] funct7,
-    output reg [31:0] imm,
+    input wire [31:0] instr, // The 32 bit instruction currently being used
+    output wire [6:0] opcode, // The general type of instruction (Load, store, branch, etc..)
+    output wire [4:0] rd, // Register to write the restlt into
+    output wire [4:0] rs1, // First register to read
+    output wire [4:0] rs2, // Second register to read 
+    output wire [2:0] funct3, // Used to store extra info about what instrution it is  (Ex. Op code tells us its R-Type instruction, and this might say this is adding, or subtracting, etc.)
+    output wire [6:0] funct7, // Used to store extra info about what instrution it is 
+    output reg [31:0] imm, // Immidiate Value
     output reg reg_write,
     output reg mem_read,
     output reg mem_write,
