@@ -112,30 +112,36 @@ module decoder (
             
             OP_BRANCH: begin 
                 branch = 1'b1; // Tells the CPU this is a branch   
-                imm = imm_b;  // Uses the branch innediate    
-                alu_op = 4'b0001; // 
+                imm = imm_b;  // Uses the branch immediate    
+                alu_op = 4'b0001; // The Alu does A - B, if A - B = 0, then A and B are equal so its useful for checing equality for ex.
                 
             end
             OP_LUI:    begin 
-                reg_write = 1'b1; //
-                alu_src = 1'b1;   
-                imm = imm_u;  
-                alu_op = 4'b1010;
+                reg_write = 1'b1; // write result to rd
+                alu_src = 1'b1;   // ALU input B = immediate
+                imm = imm_u;   // use the U-type immediate
+                alu_op = 4'b1010; // PASS_B, sends the immediate directly through the ALU
                 
             end
+            
             OP_AUIPC:  begin 
-                reg_write = 1'b1; 
-                imm = imm_u; 
+                reg_write = 1'b1; // Result will be written to rd
+                imm = imm_u; // Use the U type Immediate, and cpu-core.v handles PC + immediate
             end
+
+            
             OP_JAL:   begin 
-                reg_write = 1'b1; 
-                imm = imm_j; 
+                reg_write = 1'b1; // save the return adderess into rd
+                imm = imm_j;  // use the Jump immediate, it tells the CPU how far to jump and cpu_core handles the actual jump.
+
             end
+            
             OP_JALR:   begin 
-                reg_write = 1'b1; 
-                alu_src = 1'b1;   
-                imm = imm_i; end
-            default:   ; 
+                reg_write = 1'b1; // Save the return address into rd
+                alu_src = 1'b1;   // The alu uses immediate as input B
+                imm = imm_i;  // Use the I type immediate, and cpu_core handels the jump target 
+            end
+            default:   ; // if opcode does not match, keep all the defualt values.
         endcase
     end
 endmodule
