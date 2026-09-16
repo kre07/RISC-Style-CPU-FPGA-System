@@ -51,7 +51,7 @@ module alu (
             // result = 0 (False, A is not less than B)
             ALU_SLTU:   result = (a < b) ? 32'd1 : 32'd0; // Unsigned Comparison
             // Same as SLT, but with unsigned numbers
-            ALU_PASS_B: result = b;  // Send b directly to the output (No comparison)
+            ALU_PASS_B: result = b;  //  Send b directly to result without doing a calculation
             // Remember A does not get a pass because in cpu_core.v, a is just rs1_data. ANd b is rs2_data AND imm (Immidiate Value
             // we only need one no need for both
             default:    result = 32'd0; // If the alu does not pick a operation, set result=0
