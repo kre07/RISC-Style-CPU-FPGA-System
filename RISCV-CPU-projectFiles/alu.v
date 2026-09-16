@@ -1,11 +1,16 @@
 module alu (
-    input wire [31:0] a,
-    input wire [31:0] b,
-    input wire [3:0] alu_op,
-    output reg [31:0] result,
+    input wire [31:0] a, // 32 bit value going into the ALU
+    input wire [31:0] b, // 32 bit value going into the ALU
+    input wire [3:0] alu_op, // Tells the Alu which operation to perform (ex. Add, Subtract, XOR, .. etc)
+    output reg [31:0] result, // Output from ALU
     output wire zero
 );
-    localparam ALU_ADD    = 4'b0000, 
+    // These are just names for the different 4-bit alu_op values
+    // Example: alu_op = 0000 means ADD, alu_op = 0001 means Subtract
+  
+ 
+
+    localparam ALU_ADD    = 4'b0000,  
                ALU_SUB    = 4'b0001, 
                ALU_AND    = 4'b0010,
                ALU_OR     = 4'b0011, 
@@ -24,8 +29,16 @@ module alu (
             ALU_AND:    result = a & b;
             ALU_OR:     result = a | b;
             ALU_XOR:    result = a ^ b;
-            ALU_SLL:    result = a << b[4:0];
+            ALU_SLL:    result = a << b[4:0]; 
+            // Shift a to the LEFT
+            // b[4:0] tells it how many positions to shift
+            // Only 5 bits are needed because a 32-bit number
+            // can shift from 0 to 31 positions
+            
             ALU_SRL:    result = a >> b[4:0];
+            // Logical shift RIGHT
+            // Empty bits are filled with 0s
+            
             ALU_SRA:    result = $signed(a) >>> b[4:0];
             ALU_SLT:    result = ($signed(a) < $signed(b)) ? 32'd1 : 32'd0;
             ALU_SLTU:   result = (a < b) ? 32'd1 : 32'd0;
@@ -35,4 +48,11 @@ module alu (
     end
 
     assign zero = (result == 32'd0);
+    // If result is exactly 0:
+    // zero = 1
+    //
+    // Otherwise:
+    // zero = 0
+    //
+        
 endmodule
