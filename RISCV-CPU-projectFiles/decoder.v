@@ -19,7 +19,7 @@ module decoder (
                OP_STORE  = 7'b0100011, OP_BRANCH= 7'b1100011, OP_LUI   = 7'b0110111,
                OP_AUIPC  = 7'b0010111, OP_JAL   = 7'b1101111, OP_JALR  = 7'b1100111;
 
-    xsa
+ 
     assign opcode = instr[6:0]; // Bits 6 to 0 of the instruction = opcode
     assign rd     = instr[11:7]; // Bits 11 to 7 of the instruction = destination register
     assign funct3 = instr[14:12]; // Bits 14 to 12 of the instruction = funct3
@@ -35,7 +35,7 @@ module decoder (
     // if it is 1, add 20 ones to the front
     // This keeps positive/negative values correct.
     
-    wire [31:0] imm_s = {{20{instr[31]}}, instr[31:25], instr[11:7]}; // / Builds the immediate for Store instructions
+    wire [31:0] imm_s = {{20{instr[31]}}, instr[31:25], instr[11:7]}; //  Builds the immediate for Store instructions
     
     wire [31:0] imm_b = {{19{instr[31]}}, instr[31], instr[7], instr[30:25], instr[11:8], 1'b0}; // Builds immidiate for Branch Instrictions
     
@@ -116,7 +116,7 @@ module decoder (
                 alu_op = 4'b0001; // The Alu does A - B, if A - B = 0, then A and B are equal so its useful for checing equality for ex.
                 
             end
-            OP_LUI:    begin 
+            OP_LUI:    begin // LUI = Load Upper immediate
                 reg_write = 1'b1; // write result to rd
                 alu_src = 1'b1;   // ALU input B = immediate
                 imm = imm_u;   // use the U-type immediate
@@ -124,19 +124,19 @@ module decoder (
                 
             end
             
-            OP_AUIPC:  begin 
+            OP_AUIPC:  begin  // AUIPC = Add Upper Immediate to PC
                 reg_write = 1'b1; // Result will be written to rd
                 imm = imm_u; // Use the U type Immediate, and cpu-core.v handles PC + immediate
             end
 
             
-            OP_JAL:   begin 
+            OP_JAL:   begin // JAL = Jump and Link
                 reg_write = 1'b1; // save the return adderess into rd
                 imm = imm_j;  // use the Jump immediate, it tells the CPU how far to jump and cpu_core handles the actual jump.
 
             end
             
-            OP_JALR:   begin 
+            OP_JALR:   begin // JALR = Jump and Link Register
                 reg_write = 1'b1; // Save the return address into rd
                 alu_src = 1'b1;   // The alu uses immediate as input B
                 imm = imm_i;  // Use the I type immediate, and cpu_core handels the jump target 
