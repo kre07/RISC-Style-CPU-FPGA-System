@@ -1,4 +1,5 @@
 module cpu_core (
+    // Part 1: Main CPU inputs/Outputs
     input wire clk,
     input wire rst,
     input wire [31:0] instr,
