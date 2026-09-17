@@ -26,8 +26,8 @@ module cpu_core (
     wire [3:0] alu_op;
 
 
-
-    
+// Part 3: DECODER
+    // Basically sends all the instructions into the decoder, and gets all the control signals and register addresses back
     decoder dec_inst (
         .instr(instr), .opcode(opcode), .rd(rd), .rs1(rs1), .rs2(rs2), 
         .funct3(funct3), .funct7(funct7), .imm(imm), .reg_write(reg_write), 
@@ -35,15 +35,17 @@ module cpu_core (
         .branch(branch), .alu_op(alu_op)
     );
 
+    // Part 4: Branch Condition
+    // The whole segment ask "Should the branch even happen?"
     reg branch_cond;
     always @(*) begin
         case (funct3)
-            3'b000: branch_cond = zero;                                       // BEQ
-            3'b001: branch_cond = !zero;                                      // BNE
-            3'b100: branch_cond = ($signed(rs1_data) < $signed(rs2_data));   // BLT
-            3'b101: branch_cond = ($signed(rs1_data) >= $signed(rs2_data));  // BGE
-            3'b110: branch_cond = (rs1_data < rs2_data);                     // BLTU
-            3'b111: branch_cond = (rs1_data >= rs2_data);                    // BGEU
+            3'b000: branch_cond = zero;                                       // BEQ = Branch if Equal
+            3'b001: branch_cond = !zero;                                      // BNE = Branch if Not Equal
+            3'b100: branch_cond = ($signed(rs1_data) < $signed(rs2_data));   // BLT = Branch if Less Than
+            3'b101: branch_cond = ($signed(rs1_data) >= $signed(rs2_data));  // BGE = Branch if greater than or equal to
+            3'b110: branch_cond = (rs1_data < rs2_data);                     // BLTU = Branch less than unsigned
+            3'b111: branch_cond = (rs1_data >= rs2_data);                    // BGEU = Branch greater than or equal to Unsigned
             default: branch_cond = 1'b0;
         endcase
     end
