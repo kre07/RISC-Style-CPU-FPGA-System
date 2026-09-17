@@ -1,23 +1,33 @@
 module cpu_core (
     // Part 1: Main CPU inputs/Outputs
-    input wire clk,
-    input wire rst,
-    input wire [31:0] instr,
-    input wire [31:0] mem_rdata,
-    output wire [31:0] pc_out,
-    output wire mem_read,
-    output wire mem_write,
-    output wire [31:0] mem_addr,
-    output wire [31:0] mem_wdata,
-    output wire [3:0] mem_byte_en
+    input wire clk, // CPU clock
+    input wire rst, // Reset
+    input wire [31:0] instr, // Current 32 bit instruction from BRAM
+    input wire [31:0] mem_rdata, // Data coming back from memory
+    output wire [31:0] pc_out, //Current PC address
+    output wire mem_read, // 1 = read memory
+    output wire mem_write, // 1 = write memory
+    output wire [31:0] mem_addr, // Address the CPU wants to address
+    output wire [31:0] mem_wdata, // The data CPU wants to write
+    output wire [3:0] mem_byte_en // Which bytes should be written
 );
-    wire [6:0] opcode, funct7;
-    wire [4:0] rd, rs1, rs2;
-    wire [2:0] funct3;
-    wire [31:0] imm, rs1_data, rs2_data, alu_result, load_result;
-    wire reg_write, alu_src, branch, zero;
+    // Part 2: The instruction pieces coming from decoder.v
+    wire [6:0] opcode, funct7; // opcode = general instruction type
+    wire [4:0] rd, rs1, rs2; // destination reg, first source reg , second source reg
+    wire [2:0] funct3; // func3/func7 = exact operation
+
+    wire [31:0] imm, rs1_data, rs2_data, alu_result, load_result; // immidiate value, value stored in reg 1,...
+   
+    wire 
+    reg_write,  // can write to rd
+    alu_src,  // ALU B uses rs2 or immediate
+    branch, zero;
+    
     wire [3:0] alu_op;
 
+
+
+    
     decoder dec_inst (
         .instr(instr), .opcode(opcode), .rd(rd), .rs1(rs1), .rs2(rs2), 
         .funct3(funct3), .funct7(funct7), .imm(imm), .reg_write(reg_write), 
