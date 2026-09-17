@@ -36,11 +36,11 @@ module cpu_core (
     );
 
     // Part 4: Branch Condition
-    // The whole segment ask "Should the branch even happen?"
+    // The whole segment ask "Should the branch even happen?" (Remember the branch is just evaluating the registers)
     reg branch_cond;
     always @(*) begin
         case (funct3)
-            3'b000: branch_cond = zero;                                       // BEQ = Branch if Equal
+            3'b000: branch_cond = zero;                                       // BEQ = Branch if Equal (rs1-rs2 = 5 - 5 = 0) so if equal, itll be 0
             3'b001: branch_cond = !zero;                                      // BNE = Branch if Not Equal
             3'b100: branch_cond = ($signed(rs1_data) < $signed(rs2_data));   // BLT = Branch if Less Than
             3'b101: branch_cond = ($signed(rs1_data) >= $signed(rs2_data));  // BGE = Branch if greater than or equal to
@@ -50,18 +50,29 @@ module cpu_core (
         endcase
     end
 
+    // Part 4: Simple yes/no checks
+    // Ex if opcode = JAL opcode, then is_jal = 1 (yes)
     wire is_jal   = (opcode == 7'b1101111);
     wire is_jalR  = (opcode == 7'b1100111);
     wire is_auipc = (opcode == 7'b0010111);
 
-    wire branch_taken = (branch & branch_cond) | is_jal | is_jalR;
+
+    // Part 5: Branch conditions
+    // Take the jump if normal branch and condition is true 
+    // OR the instruction is is_jal is true OR instruction is is_jalR
+    wire branch_taken = (branch & branch_cond) | is_jal | is_jalR; 
+
+    // Part 6: Deciding where to jump
+    // JALR = rs1_data + imm, other = pc_out + imm
     wire [31:0] branch_target = is_jalR ? (rs1_data + imm) : (pc_out + imm);
-    
+
+
+    // Part 6: PC Module
     pc pc_inst (
-        .clk(clk), .rst(rst), .pc_write(1'b1), 
+        .clk(clk), .rst(rst), .pc_write(1'b1), // pc_write allows all the pc to be updated
         .branch_taken(branch_taken), .branch_target(branch_target), 
         .pc_out(pc_out)
-    );
+    ); // so every clock if branch_taken = 0, then PC + 4. IF branch_taken = 1, then branch_target (whatever it is ).
 
     wire [31:0] rd_data = (is_jal | is_jalR) ? (pc_out + 32'd4) :
                           is_auipc           ? (pc_out + imm)   :
