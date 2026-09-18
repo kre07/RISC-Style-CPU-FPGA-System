@@ -81,25 +81,35 @@ module cpu_core (
                           is_auipc           ? (pc_out + imm)   :
                           mem_read           ? load_result      :  
                                                alu_result;
-    
+
+    // Part 8: Register File
+    // Connects the CPU core to the register file so it can read two registers and optionally write a result back
     reg_file reg_inst (
         .clk(clk), .rst(rst), .we(reg_write), .rs1_addr(rs1), 
         .rs2_addr(rs2), .rd_addr(rd), .rd_data(rd_data), 
         .rs1_data(rs1_data), .rs2_data(rs2_data)
     );
 
+    // Part 9: ALU B selector
+    // If alu_src = 1, then B = immediate
+    // if alu_src = 0, then B = rs2_data
     wire [31:0] b_in = alu_src ? imm : rs2_data;
-    
+
+    // Part 10: the ALU
     alu alu_inst (
-        .a(rs1_data), .b(b_in), .alu_op(alu_op), 
-        .result(alu_result), .zero(zero)
+        .a(rs1_data),  // a = rs1_data
+        .b(b_in),     // b = b_in, and remember b_in from above is either immediate or rs2_data
+        .alu_op(alu_op),  // alu_op decides the operation
+        .result(alu_result), // the result comes out as alu_result
+        .zero(zero)
     );
 
-    lsu lsu_inst (
+    // Part 11: LSU (Handels the loads and stores)
+    lsu lsu_inst ( 
         .addr(alu_result), .mem_rdata(mem_rdata), .funct3(funct3), 
         .store_data(rs2_data), .load_result(load_result), 
         .mem_wdata(mem_wdata), .mem_byte_en(mem_byte_en)
     );
 
-    assign mem_addr = alu_result;
+    assign mem_addr = alu_result; // The alu result becomes the memory address
 endmodule
