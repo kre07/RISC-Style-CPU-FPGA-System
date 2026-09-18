@@ -1,54 +1,22 @@
 module bram (
     input wire clk,
+// Part 1: Port A >> used to READ instructions
+    input wire [10:0] addr_a, // instruction address
+    output wire [31:0] rdata_a, // the instruction that comes out 
+ 
+    // Part 2: PORT B >> used for data memory for reading/writing ( The data memory in bram can be read from or written to)
 
-    // =========================================================
-    // PORT A - CPU INSTRUCTION FETCH
-    // =========================================================
-    input wire [10:0] addr_a,
-    output wire [31:0] rdata_a,
-
-    // =========================================================
-    // PORT B - CPU DATA MEMORY
-    // =========================================================
-    input wire [10:0] addr_b,
-    input wire [31:0] wdata_b,
-    input wire we_b,
-    output reg [31:0] rdata_b
+    input wire [10:0] addr_b, // the data memory address
+    input wire [31:0] wdata_b, // the data CPU wants to write (w = write)
+    input wire we_b, // Write enable
+    output reg [31:0] rdata_b // Data coming back from memory ( r = read)
 );
 
 
-    // =========================================================
-    // INSTRUCTION ROM
-    // =========================================================
-    //
-    // Your current game = 112 instructions/words.
-    // 128 entries is enough.
-    //
-    // Keep asynchronous instruction read because your CPU
-    // currently expects the instruction combinationally.
-    // =========================================================
 
-    reg [31:0] inst_rom [0:127];
+    reg [31:0] inst_rom [0:127]; // 128 instruction locations, each location stores 32 bits. // instruction memory
 
-
-    // =========================================================
-    // SMALL DATA RAM
-    // =========================================================
-    //
-    // We do NOT need 2048 x 32-bit registers.
-    //
-    // Your program mainly needs:
-    //
-    //    globals around address 0x1B8
-    //    stack around address 0x1FD0 - 0x1FFF
-    //
-    // We use the lower 7 address bits so the high stack
-    // addresses wrap into this small physical RAM.
-    //
-    // 128 words x 32 bits = only 4096 bits.
-    // =========================================================
-
-    reg [31:0] data_ram [0:127];
+    reg [31:0] data_ram [0:127]; // 128 data locations, each location stores 32 bits // data memory
 
 
     integer i;
@@ -65,64 +33,29 @@ module bram (
         end
 
 
-        // -----------------------------------------------------
-        // Load game instructions
-        // -----------------------------------------------------
+        $readmemh("game_words.hex", inst_rom);  // Load machine code instructions from game_words into instruction memory.
 
-        $readmemh("game_words.hex", inst_rom);
-
-
-        // -----------------------------------------------------
-        // Initialized C global variables
-        // -----------------------------------------------------
-        //
-        // 0x1B8 / 4 = word address 110
-        //
-        // volatile char *VGA_MEM =
-        //                  (volatile char *)0x80000000;
-        //
         data_ram[7'd110] = 32'h80000000;
 
-
-        // 0x1BC / 4 = word address 111
-        //
-        // volatile int *GPIO_IN =
-        //                  (volatile int *)0x80003000;
-        //
         data_ram[7'd111] = 32'h80003000;
 
     end
 
 
 
-    // =========================================================
-    // INSTRUCTION FETCH
-    // =========================================================
-
-    assign rdata_a = inst_rom[addr_a[6:0]];
 
 
+    assign rdata_a = inst_rom[addr_a[6:0]]; // Important part (Basically spitting out the instruction)
+    // Take instruction address >> pick one location in inst_rom >> output that instruction as rdata_a
+    // only addr_a[6:0] is used because 7 bits can select 0-127
 
-    // =========================================================
-    // DATA RAM
-    // =========================================================
-    //
-    // IMPORTANT:
-    //
-    // addr_b is 11 bits because the original address space
-    // supported 2048 words.
-    //
-    // We only use the LOWER 7 bits.
-    //
-    // Example:
-    //
-    // stack address:
-    // 0x1FF0 / 4 = 0x7FC
-    //
-    // lower 7 bits of 0x7FC = 0x7C
-    //
-    // so it maps safely into our 128-word physical RAM.
-    // =========================================================
+
+
+// Part 4: The data-memory part 
+
+    // if we_b = 1 → write wdata_b (the data the CPU wants to write) into data_ram
+    //  and 
+    // read the selected memory location → send it to rdata_b (Data coming back from memory)
 
     always @(posedge clk) begin
 
