@@ -74,9 +74,12 @@ module cpu_core (
         .pc_out(pc_out)
     ); // so every clock if branch_taken = 0, then PC + 4. IF branch_taken = 1, then branch_target (whatever it is ).
 
-    wire [31:0] rd_data = (is_jal | is_jalR) ? (pc_out + 32'd4) :
+
+    // Part 7: Write back Decisions
+    // What value should be written in rd?
+    wire [31:0] rd_data = (is_jal | is_jalR) ? (pc_out + 32'd4) : // pc_out + 4
                           is_auipc           ? (pc_out + imm)   :
-                          mem_read           ? load_result      : 
+                          mem_read           ? load_result      :  
                                                alu_result;
     
     reg_file reg_inst (
