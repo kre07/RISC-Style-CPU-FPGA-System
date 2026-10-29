@@ -5,7 +5,7 @@ module alu_hw_test (
     wire [31:0] result;
     wire zero;
     
-    // Hardwire small test operands for a quick sanity check (10 and 3)
+    // Hardwire small test operands (10 and 3)
     alu dut (.a(32'd10), .b(32'd3), .alu_op(SW[3:0]), .result(result), .zero(zero));
     
     assign LEDR = result[9:0];
