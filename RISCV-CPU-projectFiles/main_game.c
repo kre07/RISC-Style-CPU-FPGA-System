@@ -24,16 +24,11 @@
  */
 
 
-/*
- * Fruit Catcher - Main Game Logic
- * Custom 32-bit RISC-style CPU on DE10-Lite FPGA
- */
-
+// PART 1: Memory-mapped I/O - lets the CPU access hardware using addresses
+// volatile ensures hardware reads/writes aren't optimized away
 typedef unsigned int u32;
 
 
-// Memory-mapped I/O - lets the CPU access hardware using addresses
-// volatile ensures hardware reads/writes aren't optimized away
 
 #define GPIO_BUTTONS   (*(volatile u32 *)0x80003000u)
 
@@ -51,26 +46,37 @@ typedef unsigned int u32;
 #define REG_FRUIT3_Y   (*(volatile u32 *)0x80004024u)
 
 
-// Game constants
+// PART 2: Game constants
 // 0x1 = binary 01 (right), 0x2 = binary 10 (left)
 // Each button uses a different bit so we can check them separately
 #define BUTTON_RIGHT       0x1u
 #define BUTTON_LEFT        0x2u
 
 // Game states: 0 = intro screen, 1 = playing
-#define GAME_INTRO         0u
-#define GAME_PLAYING       1u
 
-#define BASKET_SPEED       2
-#define BASKET_MIN_X       0
-#define BASKET_MAX_X       68
-#define BASKET_CATCH_W     12
+// Basket moves 2 position units per update
+#define BASKET_SPEED       2    
 
-#define FRUIT_GROUND_Y     56
-#define FRUIT_RESPAWN_Y    8
+// Furthest left the basket can move
+#define BASKET_MIN_X       0   
 
-#define MAX_SCORE          100
-#define MAX_LIVES          3
+// Furthest right the basket can move
+#define BASKET_MAX_X       68   
+
+// Width of the basket's catching area
+#define BASKET_CATCH_W     12   
+
+// Y position where the fruit reaches the ground
+#define FRUIT_GROUND_Y     56   
+
+ // Y position where the fruit respawns
+#define FRUIT_RESPAWN_Y    8   
+
+// Score resets when it reaches 100
+#define MAX_SCORE          100  
+
+// Three consecutive misses end the game
+#define MAX_LIVES          3    
 
 // Larger delay = slower fruit movement
 #define GAME_DELAY_COUNT   0x20000u
