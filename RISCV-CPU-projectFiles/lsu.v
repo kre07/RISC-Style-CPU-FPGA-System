@@ -12,6 +12,8 @@ module lsu (
     // 00 = first byte, 01 = second byte, 10 = third/ 11 = fourth
 
     always @(*) begin // Part 1:LOAD LOGIC begins here (Decides what data should come out when reading memory)
+                      // Load reads the data from the memory into a CPU Register
+
         
         case (funct3) // PART 2: : Load Byte (Load Byte: Select 1 of 4 possible 8-bit bytes, Then sign extend it to 32 bits after you selected one)
             //// Memory returns 32 bits, but LB only needs one byte (8 bits). Select the byte using byte_off, then copy its sign bit into
@@ -49,7 +51,7 @@ module lsu (
     
 
 
-    // PART 3: Store Logic; Prepares the data that will be written into memory 
+    // PART 3: Store Logic; Writes the data from a CPU Register into Memory
     always @(*) begin 
         case (funct3)
 
