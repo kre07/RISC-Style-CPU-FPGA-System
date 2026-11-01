@@ -8,12 +8,16 @@ module lsu (
     output reg [3:0] mem_byte_en // Controls which bytes of the 32 bit memory word should be written
 );
     wire [1:0] byte_off = addr[1:0];
-    // Uses the last 2 bits of the address to decide which bype inside the 32 bit word we want 
-    // 00 = first bype, 01 = second byte, 10 = third/ 11 = fourth
+    // Uses the last 2 bits of the address to decide which byte inside the 32 bit word we want 
+    // 00 = first byte, 01 = second byte, 10 = third/ 11 = fourth
 
     always @(*) begin // Part 1:LOAD LOGIC begins here (Decides what data should come out when reading memory)
-        case (funct3)
-            3'b000: case (byte_off) // LB = Load Byte
+        
+        case (funct3) // PART 2: : Load Byte 
+                      //// Memory returns 32 bits, but LB only needs one byte (8 bits).
+                    // Select the byte using byte_off, then copy its sign bit into
+                        // the upper 24 bits to produce a signed 32-bit result.
+            3'b000: case (byte_off) // LB = Load Byte,  ( byte_off selects one of the four bytes; the other three are ignored for this load bc LB = Just select 1 byte, as 4 Bytes = word)
                 2'd0: load_result = {{24{mem_rdata[7]}}, mem_rdata[7:0]}; // Load the first byte, which has 7:0 bits. Also the sign extends it to 32 bits
                 2'd1: load_result = {{24{mem_rdata[15]}}, mem_rdata[15:8]}; // Load the second byte
                 2'd2: load_result = {{24{mem_rdata[23]}}, mem_rdata[23:16]}; // Load Third byte
