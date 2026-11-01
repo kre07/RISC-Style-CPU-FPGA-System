@@ -13,17 +13,17 @@ module lsu (
 
     always @(*) begin // Part 1:LOAD LOGIC begins here (Decides what data should come out when reading memory)
         
-        case (funct3) // PART 2: : Load Byte 
-                      //// Memory returns 32 bits, but LB only needs one byte (8 bits).
-                    // Select the byte using byte_off, then copy its sign bit into
-                        // the upper 24 bits to produce a signed 32-bit result.
+        case (funct3) // PART 2: : Load Byte (Load Byte: Select 1 of 4 possible 8-bit bytes, Then sign extend it to 32 bits after you selected one)
+            //// Memory returns 32 bits, but LB only needs one byte (8 bits). Select the byte using byte_off, then copy its sign bit into
+                    
+                        
             3'b000: case (byte_off) // LB = Load Byte,  ( byte_off selects one of the four bytes; the other three are ignored for this load bc LB = Just select 1 byte, as 4 Bytes = word)
                 2'd0: load_result = {{24{mem_rdata[7]}}, mem_rdata[7:0]}; // Load the first byte, which has 7:0 bits. Also the sign extends it to 32 bits
                 2'd1: load_result = {{24{mem_rdata[15]}}, mem_rdata[15:8]}; // Load the second byte
                 2'd2: load_result = {{24{mem_rdata[23]}}, mem_rdata[23:16]}; // Load Third byte
                 2'd3: load_result = {{24{mem_rdata[31]}}, mem_rdata[31:24]}; // Load fourth byte
             endcase
-            3'b100: case (byte_off) // LBU = Load Byte Unsigned
+            3'b100: case (byte_off) // LBU = Load Byte Unsigned (Choose one of the Possible 
                 2'd0: load_result = {24'd0, mem_rdata[7:0]}; // Filling the upper bits with 24 0's, and the rest of the bits come from 7:0. 24 + 8 = 32
                 2'd1: load_result = {24'd0, mem_rdata[15:8]}; // Same
                 2'd2: load_result = {24'd0, mem_rdata[23:16]}; // Same
