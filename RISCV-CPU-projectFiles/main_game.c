@@ -82,7 +82,7 @@ typedef unsigned int u32;
 #define GAME_DELAY_COUNT   0x20000u
 
 
-// Stores the X and Y position of each fruit
+// Stores the X and Y position of each fruit (IMPORTANT  fruit->x for example accesses the x coorditane of the fruit ( its used alot later in the program)
 typedef struct {
     int x;
     int y;
@@ -126,7 +126,7 @@ static inline void publish_state(
 }
 
 
-// Calculates a new X position when a fruit respawns
+// Calculates a new X position when a fruit respawns (So it does not spawn in the same place every time)
 static inline int next_fruit_x(int x)
 {
     x += 17;
@@ -146,7 +146,7 @@ static inline int process_landed_fruit(
     Fruit *fruit,
     int basket_x,
     int *score,
-    int *lives
+    int *lives 
 )
 {
     int caught;
