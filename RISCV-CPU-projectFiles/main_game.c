@@ -23,19 +23,21 @@
  *   - On game over, score resets to 0 and the title screen returns.
  */
 
+
+/*
+ * Fruit Catcher - Main Game Logic
+ * Custom 32-bit RISC-style CPU on DE10-Lite FPGA
+ */
+
 typedef unsigned int u32;
 
-/* ---------------------------------------------------------
- * Memory-mapped I/O
- * --------------------------------------------------------- */
 
-/* Buttons:
- * bit 0 = RIGHT button
- * bit 1 = LEFT button
- */
+// Memory-mapped I/O - lets the CPU access hardware using addresses
+// volatile ensures hardware reads/writes aren't optimized away
+
 #define GPIO_BUTTONS   (*(volatile u32 *)0x80003000u)
 
-/* Game-state registers consumed by soc_top.v */
+// Game-state registers used by soc_top.v
 #define REG_SCORE      (*(volatile u32 *)0x80004000u)
 #define REG_LIVES      (*(volatile u32 *)0x80004004u)
 #define REG_STATE      (*(volatile u32 *)0x80004008u)
@@ -43,21 +45,19 @@ typedef unsigned int u32;
 
 #define REG_FRUIT1_X   (*(volatile u32 *)0x80004010u)
 #define REG_FRUIT1_Y   (*(volatile u32 *)0x80004014u)
-
 #define REG_FRUIT2_X   (*(volatile u32 *)0x80004018u)
 #define REG_FRUIT2_Y   (*(volatile u32 *)0x8000401Cu)
-
 #define REG_FRUIT3_X   (*(volatile u32 *)0x80004020u)
 #define REG_FRUIT3_Y   (*(volatile u32 *)0x80004024u)
 
 
-/* ---------------------------------------------------------
- * Game constants
- * --------------------------------------------------------- */
-
+// Game constants
+// 0x1 = binary 01 (right), 0x2 = binary 10 (left)
+// Each button uses a different bit so we can check them separately
 #define BUTTON_RIGHT       0x1u
 #define BUTTON_LEFT        0x2u
 
+// Game states: 0 = intro screen, 1 = playing
 #define GAME_INTRO         0u
 #define GAME_PLAYING       1u
 
@@ -72,24 +72,18 @@ typedef unsigned int u32;
 #define MAX_SCORE          100
 #define MAX_LIVES          3
 
-/* Larger value = slower fruit movement. */
+// Larger delay = slower fruit movement
 #define GAME_DELAY_COUNT   0x20000u
 
 
-/* ---------------------------------------------------------
- * Game data
- * --------------------------------------------------------- */
-
+// Stores the X and Y position of each fruit
 typedef struct {
     int x;
     int y;
 } Fruit;
 
 
-/* ---------------------------------------------------------
- * Hardware/game helpers
- * --------------------------------------------------------- */
-
+// Creates a delay between game updates
 static inline void delay_game(void)
 {
     volatile u32 count = GAME_DELAY_COUNT;
@@ -100,6 +94,7 @@ static inline void delay_game(void)
 }
 
 
+// Sends updated game values to the FPGA hardware
 static inline void publish_state(
     int score,
     int lives,
@@ -125,14 +120,7 @@ static inline void publish_state(
 }
 
 
-/*
- * Move a fruit to a new horizontal position after it reaches
- * the bottom. This matches the position sequence used by the
- * current game_words.hex:
- *
- *      x = x + 17
- *      if x >= 69, x = x - 60
- */
+// Calculates a new X position when a fruit respawns
 static inline int next_fruit_x(int x)
 {
     x += 17;
@@ -145,17 +133,9 @@ static inline int next_fruit_x(int x)
 }
 
 
-/*
- * Returns 1 if the game ended, otherwise 0.
- *
- * A catch:
- *   - score + 1
- *   - reset lives/miss streak back to 3
- *
- * A miss:
- *   - lives - 1
- *   - third consecutive miss = game over
- */
+// Checks whether a fruit was caught or missed
+// Uses pointers to update the original fruit, score and lives variables
+// Returns 1 for game over, 0 to continue
 static inline int process_landed_fruit(
     Fruit *fruit,
     int basket_x,
@@ -165,18 +145,15 @@ static inline int process_landed_fruit(
 {
     int caught;
 
-    /*
-     * The rendered fruit is roughly two logical cells wide.
-     * The basket catch region is 12 logical cells wide.
-     */
+    // Check if the fruit overlaps the basket
+    // -> accesses a struct member through a pointer
     caught =
         ((fruit->x + 1) >= basket_x) &&
         (fruit->x < (basket_x + BASKET_CATCH_W));
 
     if (caught) {
-        /* Any catch completely resets the consecutive-miss streak. */
+        // Caught: increase score and reset consecutive misses
         *lives = MAX_LIVES;
-
         *score = *score + 1;
 
         if (*score >= MAX_SCORE) {
@@ -184,6 +161,7 @@ static inline int process_landed_fruit(
         }
     }
     else {
+        // Missed: decrease remaining lives
         *lives = *lives - 1;
 
         if (*lives == 0) {
@@ -191,6 +169,7 @@ static inline int process_landed_fruit(
         }
     }
 
+    // Respawn the fruit at a new position
     fruit->x = next_fruit_x(fruit->x);
     fruit->y = FRUIT_RESPAWN_Y;
 
@@ -198,10 +177,7 @@ static inline int process_landed_fruit(
 }
 
 
-/* ---------------------------------------------------------
- * Main game
- * --------------------------------------------------------- */
-
+// Main game loop
 int main(void)
 {
     int score;
@@ -216,10 +192,7 @@ int main(void)
 
     for (;;) {
 
-        /* -----------------------------------------------
-         * INTRO / TITLE SCREEN
-         * ----------------------------------------------- */
-
+        // Intro screen - reset values and wait for start
         score = 0;
         lives = MAX_LIVES;
 
@@ -227,31 +200,21 @@ int main(void)
         REG_SCORE = 0;
         REG_LIVES = MAX_LIVES;
 
-        /*
-         * Wait until either button is pressed.
-         * soc_top.v displays "FRUIT CATCHER" and "PRESS START".
-         */
+        // Wait until either button is pressed
+        // & 0x3u keeps only the lowest two button bits
         do {
             buttons = GPIO_BUTTONS & 0x3u;
         } while (buttons == 0u);
 
-        /*
-         * Wait for the player to release the button before
-         * beginning. This prevents the start press from also
-         * moving the basket immediately.
-         */
+        // Wait for button release before starting
         do {
             buttons = GPIO_BUTTONS & 0x3u;
         } while (buttons != 0u);
 
 
-        /* -----------------------------------------------
-         * NEW GAME
-         * ----------------------------------------------- */
-
+        // New game - set starting positions
         basket_x = 35;
 
-        /* Three fruits begin at different X/Y positions. */
         fruit1.x = 10;
         fruit1.y = 8;
 
@@ -267,72 +230,58 @@ int main(void)
         REG_STATE = GAME_PLAYING;
 
 
-        /* -----------------------------------------------
-         * GAME LOOP
-         * ----------------------------------------------- */
-
+        // Game runs continuously until game over
         for (;;) {
 
-            /* -------------------------------------------
-             * BASKET MOVEMENT
-             *
-             * RIGHT only -> move right
-             * LEFT only  -> move left
-             * neither/both -> stop
-             * ------------------------------------------- */
-
+            // Read the button states
             buttons = GPIO_BUTTONS & 0x3u;
 
+            // Move right only if right is pressed
             if ((buttons & BUTTON_RIGHT) &&
                 !(buttons & BUTTON_LEFT)) {
 
                 basket_x += BASKET_SPEED;
 
+                // Keep basket within the right boundary
                 if (basket_x > BASKET_MAX_X) {
                     basket_x = BASKET_MAX_X;
                 }
             }
+            // Move left only if left is pressed
             else if ((buttons & BUTTON_LEFT) &&
                      !(buttons & BUTTON_RIGHT)) {
 
                 basket_x -= BASKET_SPEED;
 
+                // Keep basket within the left boundary
                 if (basket_x < BASKET_MIN_X) {
                     basket_x = BASKET_MIN_X;
                 }
             }
 
 
-            /* -------------------------------------------
-             * MOVE ALL THREE FRUITS DOWN
-             * ------------------------------------------- */
-
+            // Move all three fruits downward
             fruit1.y++;
             fruit2.y++;
             fruit3.y++;
 
 
-            /* -------------------------------------------
-             * FRUIT 1
-             * ------------------------------------------- */
-
+            // Check if fruit 1 reached the bottom
             if (fruit1.y >= FRUIT_GROUND_Y) {
 
+                // & passes the address so the original variables can change
                 if (process_landed_fruit(
                         &fruit1,
                         basket_x,
                         &score,
                         &lives)) {
 
-                    break;
+                    break;  // Exit game loop if game over
                 }
             }
 
 
-            /* -------------------------------------------
-             * FRUIT 2
-             * ------------------------------------------- */
-
+            // Check fruit 2
             if (fruit2.y >= FRUIT_GROUND_Y) {
 
                 if (process_landed_fruit(
@@ -346,10 +295,7 @@ int main(void)
             }
 
 
-            /* -------------------------------------------
-             * FRUIT 3
-             * ------------------------------------------- */
-
+            // Check fruit 3
             if (fruit3.y >= FRUIT_GROUND_Y) {
 
                 if (process_landed_fruit(
@@ -363,10 +309,7 @@ int main(void)
             }
 
 
-            /*
-             * Send the latest CPU-controlled game state to
-             * soc_top.v so the VGA renderer can draw it.
-             */
+            // Update the hardware registers used by the VGA graphics
             publish_state(
                 score,
                 lives,
@@ -376,19 +319,12 @@ int main(void)
                 fruit3
             );
 
-
-            /* Controls how quickly the fruits fall. */
+            // Slow down the game before the next update
             delay_game();
         }
 
 
-        /* -----------------------------------------------
-         * GAME OVER
-         *
-         * Three consecutive misses.
-         * Reset score and return to the intro screen.
-         * ----------------------------------------------- */
-
+        // Game over - reset score and return to intro screen
         score = 0;
         lives = MAX_LIVES;
 
@@ -397,6 +333,5 @@ int main(void)
         REG_STATE = GAME_INTRO;
     }
 
-    /* Bare-metal program should never reach this point. */
     return 0;
 }
