@@ -79,7 +79,7 @@ module lsu (
 
                 mem_byte_en =
                     byte_off[1] ? 4'b1100 : 4'b0011;
-                // Chooses which 2 bytes should be written
+                // Chooses which 2 bytes (16 bit) should be written
 
             end
 
