@@ -55,7 +55,7 @@ module lsu (
     always @(*) begin 
         case (funct3)
 
-            3'b000: begin // SB (Store Byte)
+            3'b000: begin // Part 1: SB (Store Byte)
 
                 mem_wdata = {4{store_data[7:0]}};
                 // Takes the lowest 8 bits of store_data
@@ -71,7 +71,7 @@ module lsu (
 
             end
 
-            3'b001: begin // SH (Store Halfword)
+            3'b001: begin //  Part 2: SH (Store Halfword)
 
                 mem_wdata = {2{store_data[15:0]}};
                 // Takes lowest 16 bits
@@ -84,7 +84,7 @@ module lsu (
             end
 
 
-            default: begin // SW (Store Word)
+            default: begin // Part 3: SW (Store Word)
 
                 mem_wdata = store_data;
                 // Write all 32 bits
